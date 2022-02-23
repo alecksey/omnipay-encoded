@@ -1,5 +1,5 @@
 <?php
-namespace Omnipay\Skeleton\Message;
+namespace Omnipay\Encoded\Message;
 /**
  * Authorize Request
  *

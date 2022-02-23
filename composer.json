@@ -5,7 +5,7 @@
         "omnipay",
         "encoded"
     ],
-    "homepage": "https://github.com/:vendor/omnipay-:gateway",
+    "homepage": "https://github.com/alecksey/omnipay-encoded",
     "license": "MIT",
     "authors": [
         {
@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": "^5.6|^7",
-        "omnipay/common": "~3.0"
+        "omnipay/common": "~3.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "omnipay/tests": "~3.0",
@@ -24,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Omnipay\\Skeleton\\": "src"
+            "Omnipay\\Encoded\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "League\\Skeleton\\Test\\": "tests"
+            "League\\Encoded\\Test\\": "tests"
         }
     },
     "scripts": {
