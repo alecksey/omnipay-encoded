@@ -29,4 +29,9 @@ class CreateOrderRequest extends AbstractRequest
             ]
         ];
     }
+
+    protected function createResponse($data)
+    {
+        return $this->response = new OrderResponse($this, $data);
+    }
 }

@@ -2,9 +2,6 @@
 
 namespace Omnipay\Encoded\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Common\Message\RequestInterface;
-
 class OrderResponse extends Response
 {
     public function isSuccessful()
@@ -27,5 +24,30 @@ class OrderResponse extends Response
     public function getDescription()
     {
         return $this->data['description'];
+    }
+
+    public function getHPPUrl()
+    {
+        return isset($this->data['links'][AbstractRequest::API_VERSION]) ? $this->data['links'][AbstractRequest::API_VERSION] : '';
+    }
+
+    public function getCreationDate()
+    {
+        return $this->data['creationDate'];
+    }
+
+    public function getCurrency()
+    {
+        return $this->data['currency'];
+    }
+
+    public function getAmount()
+    {
+        return $this->data['totalAmount'];
+    }
+
+    public function getCustomer()
+    {
+
     }
 }
