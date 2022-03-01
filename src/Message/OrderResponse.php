@@ -28,7 +28,7 @@ class OrderResponse extends Response
 
     public function getHPPUrl()
     {
-        return isset($this->data['links'][AbstractRequest::API_VERSION]) ? $this->data['links'][AbstractRequest::API_VERSION] : '';
+        return isset($this->data['links']['hpp'][AbstractRequest::API_VERSION]) ? $this->data['links']['hpp'][AbstractRequest::API_VERSION] : '';
     }
 
     public function getCreationDate()
