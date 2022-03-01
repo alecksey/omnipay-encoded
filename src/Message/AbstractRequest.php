@@ -152,10 +152,10 @@ abstract class AbstractRequest extends BaseAbstractRequest
                 if (is_array($data) && isset($data['access_token'])) {
                     $this->auth_token = $data['access_token'];
                 } else {
-                    throw new \Exception('Request access token error');
+                    throw new \Omnipay\Common\Exception\InvalidRequestException('Invalid auth request');
                 }
             } else {
-                throw new \Exception('Invalid access key');
+                throw new \Omnipay\Encoded\Exception\InvalidKeyException();
             }
         }
 

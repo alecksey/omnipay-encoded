@@ -32,6 +32,10 @@ class CreateOrderRequest extends AbstractRequest
 
     protected function createResponse($data)
     {
-        return $this->response = new OrderResponse($this, $data);
+        if(!isset($data[0])) {
+            throw new \Omnipay\Common\Exception\InvalidResponseException('Invalid response from gateway');
+        }
+
+        return $this->response = new OrderResponse($this, $data[0]);
     }
 }
