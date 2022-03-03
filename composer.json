@@ -17,7 +17,9 @@
     "require": {
         "php": "^5.6|^7",
         "omnipay/common": "~3.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "league/iso3166": "^4.0"
     },
     "require-dev": {
         "omnipay/tests": "~3.0",

@@ -55,4 +55,28 @@ class ServerGateway extends AbstractGateway
     {
         return $this->createRequest(\Omnipay\Encoded\Message\CreateOrderRequest::class, $parameters);
     }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Encoded\Message\CreateCustomerRequest
+     */
+    public function createCustomer(array $parameters = [])
+    {
+        return $this->createRequest(\Omnipay\Encoded\Message\CreateCustomerRequest::class, $parameters);
+    }
+
+    public function getCustomers(array $parameters = [])
+    {
+        return $this->createRequest(\Omnipay\Encoded\Message\GetCustomersRequest::class, $parameters);
+    }
+
+    public function getOrder(array $parameters = [])
+    {
+        return $this->createRequest(\Omnipay\Encoded\Message\GetOrderRequest::class, $parameters);
+    }
+
+    public function getOrderTransactions(array $parameters = [])
+    {
+        return $this->createRequest(\Omnipay\Encoded\Message\GetOrderTransactionsRequest::class, $parameters);
+    }
 }

@@ -17,6 +17,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     protected $api_suffix = '/';
 
+    protected $api_end_url = '';
+
     protected $method = 'GET';
 
     protected $query_type = self::GET_QUERY_TYPE_SINGE;
@@ -79,9 +81,9 @@ abstract class AbstractRequest extends BaseAbstractRequest
             case self::METHOD_PUT:
                 $response = $this->httpClient->request(
                     $this->method,
-                    $url,
+                    $url . $this->api_end_url,
                     [
-                        'Authorization' => 'Bearer ' .  $this->auth_token,
+                        'Authorization' => 'Bearer ' . $this->auth_token,
                         'Content-Type' => 'application/json'
                     ],
                     json_encode($data)
@@ -92,31 +94,32 @@ abstract class AbstractRequest extends BaseAbstractRequest
             case self::METHOD_GET:
                 switch ($this->query_type) {
                     case self::GET_QUERY_TYPE_SINGE:
-                        $url = $url . $data['id'];
+                        $url = $url . '/' . $data['id'];
                         $response = $this->httpClient->request(
                             'GET',
-                            $url,
+                            $url . $this->api_end_url,
                             [
-                                'Authorization' => 'Bearer ' .  $this->auth_token,
+                                'Authorization' => 'Bearer ' . $this->auth_token,
                             ]
                         );
                         break;
                     case self::GET_QUERY_TYPE_MULTI:
-                        $url = $url . '?'.http_build_query($data);
+                        $url = $url . '?' . http_build_query($data);
+
                         $response = $this->httpClient->request(
                             'GET',
-                            $url,
+                            $url . $this->api_end_url,
                             [
-                                'Authorization' => 'Bearer ' .  $this->auth_token,
+                                'Authorization' => 'Bearer ' . $this->auth_token,
                             ]
                         );
                         break;
                     case self::GET_QUERY_TYPE_EMPTY:
                         $response = $this->httpClient->request(
                             'GET',
-                            $url,
+                            $url . $this->api_end_url,
                             [
-                                'Authorization' => 'Bearer ' .  $this->auth_token,
+                                'Authorization' => 'Bearer ' . $this->auth_token,
                             ]
                         );
                         break;
@@ -128,11 +131,30 @@ abstract class AbstractRequest extends BaseAbstractRequest
         }
 
 
-
         $content = $response->getBody()->getContents();
 
-        $response_data = json_decode($content, true);
-        return $this->createResponse($response_data);
+        if ($response->getStatusCode() === 200 || $response->getStatusCode() === 201) {
+            $response_data = json_decode($content, true);
+            return $this->createResponse($response_data);
+        } else {
+
+            var_dump($url, $response->getStatusCode(), $content);
+            if ($content !== '') {
+                $error_data = json_decode($content, true);
+
+                if(isset($error_data['additionalInfo']['existingRefs'])) {
+                    throw new \Omnipay\Encoded\Exception\RecordExistsException();
+                }
+                throw  new \Omnipay\Common\Exception\InvalidRequestException(
+                    $error_data['message']
+                );
+            } else {
+                throw  new \Omnipay\Common\Exception\InvalidRequestException(
+                    'Invalid request or gateway error'
+                );
+            }
+        }
+
     }
 
     protected function auth()
@@ -141,7 +163,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
             if (is_string($this->getAccessKey()) && !empty($this->getAccessKey()) &&
                 is_string($this->getAccessSecret()) && !empty($this->getAccessSecret())) {
                 $url = $this->getEndpoint() . '/auth/oauth/token?grant_type=client_credentials';
-                $auth_token = base64_encode($this->getAccessKey().':'.$this->getAccessSecret());
+                $auth_token = base64_encode($this->getAccessKey() . ':' . $this->getAccessSecret());
 
 
                 $res = $this->httpClient->request('POST', $url, [
@@ -175,9 +197,9 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected function getBaseData()
     {
         return [
-         //   'transaction_id' => $this->getTransactionId(),
-         //   'expire_date' => $this->getCard()->getExpiryDate('mY'),
-         //   'start_date' => $this->getCard()->getStartDate('mY'),
+            //   'transaction_id' => $this->getTransactionId(),
+            //   'expire_date' => $this->getCard()->getExpiryDate('mY'),
+            //   'start_date' => $this->getCard()->getStartDate('mY'),
         ];
     }
 }
