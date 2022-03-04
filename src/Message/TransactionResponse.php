@@ -14,7 +14,7 @@ class TransactionResponse extends Response
     /**
      * @return TransactionResponseResponse
      */
-    public function getResponse()
+    public function getResultResponse()
     {
         if(null === $this->result_response) {
             $this->result_response = new TransactionResponseResponse($this->request, $this->data['response']);
