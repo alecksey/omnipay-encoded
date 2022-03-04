@@ -79,4 +79,9 @@ class ServerGateway extends AbstractGateway
     {
         return $this->createRequest(\Omnipay\Encoded\Message\GetOrderTransactionsRequest::class, $parameters);
     }
+
+    public function getTransaction(array $parameters = [])
+    {
+        return $this->createRequest(\Omnipay\Encoded\Message\GetTransactionRequest::class, $parameters);
+    }
 }

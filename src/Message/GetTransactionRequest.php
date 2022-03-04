@@ -20,8 +20,6 @@ class GetTransactionRequest extends AbstractRequest
     }
 
     public function createResponse($data) {
-        if(!isset($data[0])) {
-            throw new \Omnipay\Common\Exception\InvalidResponseException('Invalid response from gateway');
-        }
+        return $this->response = new TransactionResponse($this, $data);
     }
 }
