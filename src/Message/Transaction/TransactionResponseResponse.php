@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Transaction;
 
-class TransactionResponseResponse extends Response
+class TransactionResponseResponse extends \Omnipay\Encoded\Message\Response
 {
     public function isSuccessful()
     {

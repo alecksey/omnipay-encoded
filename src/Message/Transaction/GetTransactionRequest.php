@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Transaction;
 
-class GetTransactionRequest extends AbstractRequest
+class GetTransactionRequest extends \Omnipay\Encoded\Message\AbstractRequest
 {
     protected $method = 'GET';
 
@@ -19,7 +19,8 @@ class GetTransactionRequest extends AbstractRequest
         ];
     }
 
-    public function createResponse($data) {
+    public function createResponse($data)
+    {
         return $this->response = new TransactionResponse($this, $data);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Transaction;
 
-class TransactionResponse extends Response
+class TransactionResponse extends \Omnipay\Encoded\Message\Response
 {
     protected $result_response = null;
 
@@ -16,7 +16,7 @@ class TransactionResponse extends Response
      */
     public function getResultResponse()
     {
-        if(null === $this->result_response) {
+        if (null === $this->result_response) {
             $this->result_response = new TransactionResponseResponse($this->request, $this->data['response']);
         }
 

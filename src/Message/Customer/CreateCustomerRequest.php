@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Customer;
 
-class CreateCustomerRequest extends AbstractRequest
+class CreateCustomerRequest extends \Omnipay\Encoded\Message\AbstractRequest
 {
     protected $api_suffix = '/customers';
 
@@ -24,7 +24,6 @@ class CreateCustomerRequest extends AbstractRequest
                     $country_data = (new \League\ISO3166\ISO3166)->alpha3($country);
                 }
 
-                var_dump($country_data);
                 $country = $country_data['alpha3'];
 
             } catch (\Exception $e) {
@@ -128,7 +127,8 @@ class CreateCustomerRequest extends AbstractRequest
         return $this->getParameter('address_postcode');
     }
 
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->setParameter('address', $address);
 
         return $this;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Customer;
 
-class CustomerResponse extends Response
+class CustomerResponse extends \Omnipay\Encoded\Message\Response
 {
     public function isSuccessful()
     {
@@ -39,5 +39,9 @@ class CustomerResponse extends Response
         return $this->data['contact'];
     }
 
+    public function getEmail()
+    {
+        return $this->data['email'];
+    }
 
 }

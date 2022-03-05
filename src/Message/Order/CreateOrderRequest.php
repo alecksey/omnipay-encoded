@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Order;
 
-class CreateOrderRequest extends AbstractRequest
+class CreateOrderRequest extends \Omnipay\Encoded\Message\AbstractRequest
 {
     protected $api_suffix = '/orders';
 
@@ -16,7 +16,7 @@ class CreateOrderRequest extends AbstractRequest
 
         $contact = null;
 
-        if(!empty($this->getContactForename()) && !empty($this->getContactSurname())) {
+        if (!empty($this->getContactForename()) && !empty($this->getContactSurname())) {
             $contact = [
                 'object' => 'customer',
                 'ref' => 'CUSTOMER-1',
@@ -49,7 +49,7 @@ class CreateOrderRequest extends AbstractRequest
             ]
         ];
 
-        if(null !== $contact) {
+        if (null !== $contact) {
             $data['billingCustomer'] = $contact;
         }
 
@@ -60,7 +60,7 @@ class CreateOrderRequest extends AbstractRequest
 
     protected function createResponse($data)
     {
-        if(!isset($data[0])) {
+        if (!isset($data[0])) {
             throw new \Omnipay\Common\Exception\InvalidResponseException('Invalid response from gateway');
         }
 

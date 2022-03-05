@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Order;
 
-class GetOrderTransactionsRequest extends AbstractRequest
+class GetOrderTransactionsRequest extends \Omnipay\Encoded\Message\AbstractRequest
 {
     protected $method = 'GET';
 

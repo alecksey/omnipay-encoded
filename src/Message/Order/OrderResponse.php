@@ -1,9 +1,15 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Order;
 
-class OrderResponse extends Response
+use Omnipay\Encoded\Message\AbstractRequest;
+use Omnipay\Encoded\Message\Customer\CustomerResponse;
+
+class OrderResponse extends \Omnipay\Encoded\Message\Response
 {
+
+    protected $customer_obj = null;
+
     public function isSuccessful()
     {
         return isset($this->data['id']);
@@ -14,6 +20,8 @@ class OrderResponse extends Response
         if (isset($this->data['ref'])) {
             return $this->data['ref'];
         }
+
+        return null;
     }
 
     public function getId()
@@ -28,7 +36,8 @@ class OrderResponse extends Response
 
     public function getHPPUrl()
     {
-        return isset($this->data['links']['hpp'][AbstractRequest::API_VERSION]) ? $this->data['links']['hpp'][AbstractRequest::API_VERSION] : '';
+        return isset($this->data['links']['hpp'][AbstractRequest::API_VERSION]) ?
+            $this->data['links']['hpp'][AbstractRequest::API_VERSION] : '';
     }
 
     public function getCreationDate()
@@ -46,8 +55,18 @@ class OrderResponse extends Response
         return $this->data['totalAmount'];
     }
 
+    /**
+     * @return CustomerResponse|null
+     */
     public function getCustomer()
     {
+        if (isset($this->data['billingCustomer'])) {
+            $this->customer_obj = new CustomerResponse($this->request, $this->data['billingCustomer']);
 
+            return $this->customer_obj;
+        }
+
+
+        return null;
     }
 }

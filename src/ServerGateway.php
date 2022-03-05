@@ -44,44 +44,56 @@ class ServerGateway extends AbstractGateway
     }
 
     /**
-     * @return Message\AuthorizeRequest
+     * @param array $parameters
+     * @return \Omnipay\Encoded\Message\Order\CreateOrderRequest
      */
-    public function authorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Encoded\Message\AuthorizeRequest', $parameters);
-    }
-
     public function createOrder(array $parameters = array())
     {
-        return $this->createRequest(\Omnipay\Encoded\Message\CreateOrderRequest::class, $parameters);
+        return $this->createRequest(\Omnipay\Encoded\Message\Order\CreateOrderRequest::class, $parameters);
     }
 
     /**
      * @param array $parameters
-     * @return \Omnipay\Encoded\Message\CreateCustomerRequest
+     * @return \Omnipay\Common\Message\AbstractRequest
      */
     public function createCustomer(array $parameters = [])
     {
-        return $this->createRequest(\Omnipay\Encoded\Message\CreateCustomerRequest::class, $parameters);
+        return $this->createRequest(\Omnipay\Encoded\Message\Customer\CreateCustomerRequest::class, $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Encoded\Message\Customer\GetCustomersRequest
+     */
     public function getCustomers(array $parameters = [])
     {
-        return $this->createRequest(\Omnipay\Encoded\Message\GetCustomersRequest::class, $parameters);
+        return $this->createRequest(\Omnipay\Encoded\Message\Customer\GetCustomersRequest::class, $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Encoded\Message\Order\GetOrderRequest
+     */
     public function getOrder(array $parameters = [])
     {
-        return $this->createRequest(\Omnipay\Encoded\Message\GetOrderRequest::class, $parameters);
+        return $this->createRequest(\Omnipay\Encoded\Message\Order\GetOrderRequest::class, $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Encoded\Message\Order\GetOrderTransactionsRequest
+     */
     public function getOrderTransactions(array $parameters = [])
     {
-        return $this->createRequest(\Omnipay\Encoded\Message\GetOrderTransactionsRequest::class, $parameters);
+        return $this->createRequest(\Omnipay\Encoded\Message\Order\GetOrderTransactionsRequest::class, $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\Transaction\GetTransactionRequest
+     */
     public function getTransaction(array $parameters = [])
     {
-        return $this->createRequest(\Omnipay\Encoded\Message\GetTransactionRequest::class, $parameters);
+        return $this->createRequest(\Omnipay\Encoded\Message\Transaction\GetTransactionRequest::class, $parameters);
     }
 }

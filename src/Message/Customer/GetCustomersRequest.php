@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\Encoded\Message;
+namespace Omnipay\Encoded\Message\Customer;
 
-class GetCustomersRequest extends AbstractRequest
+class GetCustomersRequest extends \Omnipay\Encoded\Message\AbstractRequest
 {
 
     protected $api_suffix = '/customers';
