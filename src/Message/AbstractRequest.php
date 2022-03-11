@@ -11,7 +11,7 @@ use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 abstract class AbstractRequest extends BaseAbstractRequest
 {
     const API_VERSION = 'v1';
-    protected $liveEndpoint = 'https://live.encoded.services';
+    protected $liveEndpoint = 'https://prod.encoded.services';
     protected $testEndpoint = 'https://sit.encoded.services';
     protected $auth_token = null;
 
