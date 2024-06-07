@@ -12,7 +12,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
 {
     const API_VERSION = 'v1';
     protected $liveEndpoint = 'https://prod.encoded.services';
-    protected $testEndpoint = 'https://my-stage.jtglobal.com/api';
+    protected $testEndpoint = 'https://sit.encoded.services';
     protected $auth_token = null;
 
     protected $api_suffix = '/';
