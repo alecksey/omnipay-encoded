@@ -116,10 +116,17 @@ class CreateOrderRequest extends \Omnipay\Encoded\Message\AbstractRequest
             foreach ($this->getItems() as $item) {
                 /* @var \Omnipay\Common\Item $item */
                 $data['items'][] = [
+                    'object' => 'order.item',
                     'ref' => $item->getName(),
                     'description' => $item->getDescription(),
                     'quantity' => $item->getQuantity(),
-                    'unitAmount' => $item->getPrice()
+                    'unitAmount' => $item->getPrice(),
+                    'totalAmount' => $item->getPrice() * $item->getQuantity(),
+                    'taxUnitAmount' => 0,
+                    'preTaxUnitAmount' => 0,
+                    'taxRate' => 0,
+                    'taxAmount' => 0,
+                    'preTaxAmount' => 0
                 ];
             }
         }
