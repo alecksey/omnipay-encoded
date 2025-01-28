@@ -49,6 +49,62 @@ class CreateOrderRequest extends \Omnipay\Encoded\Message\AbstractRequest
             ]
         ];
 
+        $hppView = [];
+        $hppViewOrder = [];
+        $hppViewPayment = [];
+
+        if (null !== $this->getHppViewTheme()) {
+            $hppView['theme'] = $this->getHppViewTheme();
+        }
+
+        if (null !== $this->getHppViewOrderType()) {
+            $hppView['type'] = $this->getHppViewOrderType();
+        }
+
+        if (null !== $this->getHppViewOrderDisplayPayee() ||
+            null !== $this->getHppViewOrderDisplayItems() ||
+            null !== $this->getHppViewOrderDisplayTotalAmount()) {
+            $hppViewOrder = [
+                'display' => []
+            ];
+
+            if (null !== $this->getHppViewOrderDisplayPayee()) {
+                $hppViewOrder['display']['payee'] = $this->getHppViewOrderDisplayPayee();
+            }
+
+            if (null !== $this->getHppViewOrderDisplayItems()) {
+                $hppViewOrder['display']['items'] = $this->getHppViewOrderDisplayItems();
+            }
+
+            if (null !== $this->getHppViewOrderDisplayTotalAmount()) {
+                $hppViewOrder['display']['totalAmount'] = $this->getHppViewOrderDisplayTotalAmount();
+            }
+        }
+
+        if (count($hppViewOrder) > 0) {
+            $hppView['order'] = $hppViewOrder;
+        }
+
+        if (null !== $this->getHppViewPaymentApplePayEnabled()) {
+            $hppViewPayment['applePay'] = [
+                'enabled' => $this->getHppViewPaymentApplePayEnabled()
+            ];
+        }
+
+        if (null !== $this->getHppViewPaymentGooglePayEnabled()) {
+            $hppViewPayment['googlePay'] = [
+                'enabled' => $this->getHppViewPaymentGooglePayEnabled()
+            ];
+        }
+
+        if (count($hppViewPayment) > 0) {
+            $hppView['payment'] = $hppViewPayment;
+        }
+
+        if (count($hppView) > 0) {
+            $data['hpp']['view'] = $hppView;
+        }
+
         if (null !== $contact) {
             $data['billingCustomer'] = $contact;
         }
@@ -159,5 +215,103 @@ class CreateOrderRequest extends \Omnipay\Encoded\Message\AbstractRequest
     public function getContactAddressPostCode()
     {
         return $this->getParameter('contact_address_postcode');
+    }
+
+    public function getHppViewTheme()
+    {
+        return $this->getParameter('hpp_view_theme');
+    }
+
+    /**
+     * @param string $theme classic or modern
+     * @return $this
+     */
+    public function setHppViewTheme(string $theme)
+    {
+        if (!in_array($theme, ['classic', 'modern'])) {
+            throw new \Omnipay\Encoded\Exception\InvalidValueException($theme, '[classic, modern]');
+        }
+
+        $this->setParameter('hpp_view_theme', $theme);
+
+        return $this;
+    }
+
+    public function getHppViewOrderType()
+    {
+        return $this->getParameter('hpp_view_order_type');
+    }
+
+    /**
+     * @param string $type minimum or expanded
+     * @return void
+     */
+    public function setHppViewOrderType(string $type)
+    {
+        //minimum, expanded
+        if (!in_array($type, ['minimum', 'expanded'])) {
+            throw new \Omnipay\Encoded\Exception\InvalidValueException($type, '[minimum, expanded]');
+        }
+        $this->setParameter('hpp_view_order_type', $type);
+    }
+
+    public function getHppViewOrderDisplayPayee()
+    {
+        return $this->getParameter('hpp_view_order_display_payee');
+    }
+
+    public function setHppViewOrderDisplayPayee(bool $flag)
+    {
+        $this->setParameter('hpp_view_order_display_payee', $flag);
+
+        return $this;
+    }
+
+    public function getHppViewOrderDisplayItems()
+    {
+        return $this->getParameter('hpp_view_order_display_items');
+    }
+
+    public function setHppViewOrderDisplayItems(bool $flag)
+    {
+        $this->setParameter('hpp_view_order_display_items', $flag);
+
+        return $this;
+    }
+
+    public function getHppViewOrderDisplayTotalAmount()
+    {
+        return $this->getParameter('hpp_view_order_display_total_amount');
+    }
+
+    public function setHppViewOrderDisplayTotalAmount(bool $flag)
+    {
+        $this->setParameter('hpp_view_order_display_total_amount', $flag);
+
+        return $this;
+    }
+
+    public function getHppViewPaymentApplePayEnabled()
+    {
+        return $this->getParameter('hpp_view_payment_apple_pay_enabled');
+    }
+
+    public function setHppViewPaymentApplePayEnabled(bool $flag)
+    {
+        $this->setParameter('hpp_view_payment_apple_pay_enabled', $flag);
+
+        return $this;
+    }
+
+    public function getHppViewPaymentGooglePayEnabled()
+    {
+        return $this->getParameter('hpp_view_payment_google_pay_enabled');
+    }
+
+    public function setHppViewPaymentGooglePayEnabled(bool $flag)
+    {
+        $this->setParameter('hpp_view_payment_google_pay_enabled', $flag);
+
+        return $this;
     }
 }
