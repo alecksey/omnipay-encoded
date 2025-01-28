@@ -39,6 +39,7 @@ class CreateOrderRequest extends \Omnipay\Encoded\Message\AbstractRequest
         $data = [
             'object' => 'order',
             'ref' => $this->getTransactionReference(),
+            'description' => $this->getDescription() ?? '',
             'currency' => $this->getCurrency(),
             'totalAmount' => $this->getAmount(),
             'hpp' => [
@@ -107,6 +108,20 @@ class CreateOrderRequest extends \Omnipay\Encoded\Message\AbstractRequest
 
         if (null !== $contact) {
             $data['billingCustomer'] = $contact;
+        }
+
+        if (null !== $this->getItems()) {
+            $data['items'] = [];
+
+            foreach ($this->getItems() as $item) {
+                /* @var \Omnipay\Common\Item $item */
+                $data['items'][] = [
+                    'ref' => $item->getName(),
+                    'description' => $item->getDescription(),
+                    'quantity' => $item->getQuantity(),
+                    'unitAmount' => $item->getPrice()
+                ];
+            }
         }
 
         return [
